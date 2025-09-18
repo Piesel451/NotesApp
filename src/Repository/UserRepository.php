@@ -28,17 +28,26 @@ class UserRepository
         return (int)$this->pdo->lastInsertId();
     }
 
+    public function userExistsByEmail(string $email): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return (bool) $stmt->fetchColumn();
+    }
+
+    public function userExistsById(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return (bool) $stmt->fetchColumn();
+    }
+
     public function findUserByEmail(string $email): ?User
     {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if(!$row){
-            return null;
-        }
-
-        return new User($row['email'], $row['password_hash'], (int)$row['id'], $row['created_at']);
+        $row = $stmt->fetch();
+        return $row ? new User($row['email'], $row['password_hash'], $row['id'], $row['created_at']) : null;
     }
 
 }
