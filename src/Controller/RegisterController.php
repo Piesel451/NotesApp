@@ -14,7 +14,7 @@ class RegisterController
         $this->repo = $repo;
     }
 
-    public function register(): string
+    public function register()
     {
         $rawData = file_get_contents("php://input");
         $data = json_decode($rawData, true);
@@ -24,18 +24,18 @@ class RegisterController
                 "success" => false,
                 "error" => "Missing required fields (email, password)"
             ], 400);
-            exit;
+            return;
         }
 
         $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
         $password = $data['password'];
 
-        if($this->repo->findUserByEmail($email)){
+        if($this->repo->userExistsByEmail($email)){
                 Response::jsonResponse([
                 "success" => false,
                 "error" => "User already exists"
             ], 409);
-            exit;
+            return;
         }
 
         try {
@@ -47,7 +47,7 @@ class RegisterController
                 "user_id" => $userId,
                 "email" => $email
             ]);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             Response::jsonResponse([
                 "success" => false,
                 "error" => "Failed to create user". $e->getMessage()
