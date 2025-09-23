@@ -11,9 +11,11 @@
     use Phroute\Phroute\Exception\HttpMethodNotAllowedException;
     use App\Config\Database;
     use App\Http\Response;
+    use App\Http\AuthContext;
+    use App\Http\Middleware\AuthMiddleware;
     use App\Repository\UserRepository;
-    use App\Controller\RegisterController;
     use App\Repository\NoteRepository;
+    use App\Controller\RegisterController;
     use App\Controller\NoteController;
     use App\Controller\LoginController;
 
@@ -34,9 +36,21 @@
 
     $router = new RouteCollector;
 
+    $router->filter('auth',function(){
+        $decoded = AuthMiddleware::verify();
+        if ($decoded === null) return false;
+        AuthContext::setUser($decoded);
+    });
+
     $router->post("/register", [$registerController, "register"]);
-    $router->post("/notes", [$noteController, "addNote"]);
     $router->post("/login", [$loginController, "login"]);
+
+    //Routes protected by AuthMiddleware
+    $router->group(['before' => 'auth'], function($router) use ($noteController) {
+        $router->post("/add-note", [$noteController, "addNote"]);
+        $router->post("/edit-note", [$noteController, "editNote"]);
+        $router->post("/delete-note", [$noteController, "deleteNote"]);
+    });
 
     $dispatcher = new Dispatcher($router->getData());
 
@@ -53,7 +67,5 @@
             "error" => "Method not allowed (only POST method allowed)",
         ], 405);
     }
-    
-    //echo $response;
 
 ?>

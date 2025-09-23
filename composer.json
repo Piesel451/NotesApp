@@ -2,7 +2,8 @@
     "require": {
         "vlucas/phpdotenv": "^5.5",
         "phroute/phroute": "^2.2",
-        "firebase/php-jwt": "^6.11"
+        "firebase/php-jwt": "^6.11",
+        "predis/predis": "^3.2"
     },
     "autoload":{
         "psr-4":{

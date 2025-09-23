@@ -17,5 +17,6 @@ class Note
         $this->id = $id;
         $this->createdAt = $createdAt ?? date('Y-m-d H:i:s');
     }
+    
 }
 ?>

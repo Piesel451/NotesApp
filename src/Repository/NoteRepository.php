@@ -26,6 +26,29 @@ class NoteRepository
         ]);
         return (int)$this->pdo->lastInsertId();
     }
+
+    public function deleteNote(Note $note)
+    {
+        $stmt = $this->pdo->prepare(
+            "DELETE FROM notes WHERE id = :note_id"
+        );
+        $stmt->execute([
+            ':note_id' => $note->id
+        ]);
+    }
+
+    public function findNoteById($note_id)
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM notes WHERE id = :note_id"
+        );
+        $stmt->execute([
+            'note_id' => $note_id
+        ]);
+        $row = $stmt->fetch();
+        return $row ? new Note($row['title'],$row['content'],$row['user_id'],$row['id'],$row['created_at']) : null;
+    }
+
 }
 
 ?>

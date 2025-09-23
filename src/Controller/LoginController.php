@@ -50,7 +50,6 @@ class LoginController
             "exp" => time() + (int)$_ENV['JWT_EXP'],
             "sub" => $user->id,
             "email" => $user->email,
-            "user_id" => $user->id
         ];
 
         $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
