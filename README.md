@@ -4,7 +4,7 @@ A simple backend API written in PHP, using [Phroute](https://github.com/mrjgreen
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 NotesApp/
@@ -24,7 +24,7 @@ NotesApp/
 
 ---
 
-## 🗄️ Database Structure
+## Database Structure
 
 ```sql
 CREATE TABLE users (
@@ -35,7 +35,7 @@ CREATE TABLE users (
 );
 ```
 
-## ⚙️ Requirements
+## Requirements
 
 - PHP >= 8.1  
 - Composer  
@@ -43,7 +43,7 @@ CREATE TABLE users (
 
 ---
 
-## 🚀 Installation
+## Installation
 
 1. **Install dependencies:**
     ```bash
@@ -68,7 +68,7 @@ CREATE TABLE users (
 
 ---
 
-## 📚 API
+## API
 
 | Method | Endpoint         | Description                |
 |--------|------------------|----------------------------|
@@ -76,7 +76,7 @@ CREATE TABLE users (
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - PHP 8.1+
 - [Phroute](https://github.com/mrjgreen/phroute) (routing)
@@ -85,13 +85,13 @@ CREATE TABLE users (
 
 ---
 
-## 🙏 Credits
+## Credits
 
 - [Phroute](https://github.com/mrjgreen/phroute) for routing
 
 ---
 
-## 💡 Contributing
+## Contributing
 
 Pull requests and suggestions are welcome! Feel free to open an issue or submit a PR.
 
